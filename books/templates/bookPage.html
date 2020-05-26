@@ -11,20 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <div class="row">
-                    <div class="col">
-                        <div class="row justify-content-end">
-                            <div class="col-1">
-                                <a href="/books">Home</a>
-                            </div>
-                            <div class="col-1">
-                                <a href="/logout">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include "header.html" %}
             <div class="row justify-content-between">
                 <div class="col-6">
                     <h1 class="row">{{book.title}}</h1>
@@ -50,14 +37,14 @@
                     {% endfor %}
                 </div>
                 <div class="col-5">
-                    <form action="/books/{{book.id}}/addReview" method="POST">
+                    <form id="addReview"action="/books/{{book.id}}/addReview" method="POST">
                         {% csrf_token %}
                         <div class="row"><h3>Add a Review:</h3></div>
                         <div class="row">
                                 <textarea class="col" name="review" id="review" cols="30" rows="10"></textarea>
                         </div>
                         <div class="row">
-                            <p>Rating: <input name="rating" value="5" type="number" max=5 min=1> stars</p>
+                            <p>Rating: <input id="rating" name="rating" value="5" type="number" max=5 min=1> stars</p>
                         </div>
                         <div class="row">
                             <div class="col text-right">
@@ -70,8 +57,22 @@
         </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+            $('#addReview').submit(function(e){
+                e.preventDefault()
+                console.log("FOrm submitted but no HTTP request sent to server")
+                $.ajax({
+                    url: "/books/{{book.id}}/addReview",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function(response){
+                        console.log("Response: ", response)
+                    }
+                })
+            });
+        </script>
     </body>
 </html>

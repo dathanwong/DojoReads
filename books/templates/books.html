@@ -11,21 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <div class="row">
-                    <h1 class="col">Welcome {{user.name}}!</h1>
-                    <div class="col">
-                        <div class="row text-right">
-                            <div class="col">
-                                <a href="/books/add">Add Book and Review</a>
-                            </div>
-                            <div class="col">
-                                <a href="/logout">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include "header.html" %}
             <div class="row">
                 <div class="col-5">
                     <div class="row my-2">

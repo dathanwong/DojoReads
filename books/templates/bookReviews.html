@@ -1,0 +1,18 @@
+{% for review in reviews %}
+<div class="row border-top border-dark">
+    <div class="col">
+        <div class="row">
+            Rating: {{review.rating}}
+        </div>
+        <div class="row">
+            <span><a href="/books/users/{{review.user.id}}">{{review.user.name}}</a> says: {{review.review}}</span>
+        </div>
+        <div class="row">
+            Posted on {{review.created_at}}
+            {% if review.user.id == request.session.userID %}
+                <a href="/books/{{book.id}}/{{review.id}}/delete">Delete this review</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
